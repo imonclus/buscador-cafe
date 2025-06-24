@@ -1,54 +1,54 @@
 // script.js
 const SHEET_ID = "172Uxq75bJg_c97_MurIVnraP12dPzpXzZN5Xr8WnaGw";
-const SHEET_NAME = "Hoja1";
+const SHEET_NAME = "Hoja1"; // Corrected based on user feedback
 
-function buscarCafe() {
-  var cafe = document.getElementById("cafeName").value.trim().toLowerCase();
-  var resultadoDiv = document.getElementById("resultado");
-  resultadoDiv.innerHTML = "<p>Buscando...</p>";
+async function searchCoffee() {
+  const coffeeName = document.getElementById("coffeeName").value.trim().toLowerCase();
+  const resultsDiv = document.getElementById("results");
+  const loaderDiv = document.getElementById("loader");
 
-  getSheetData()
-    .then(function(data) {
-      var coffeeInfo = findCoffeeInfo(cafe, data);
+  resultsDiv.innerHTML = ""; // Clear previous results
+  loaderDiv.style.display = "block"; // Show loader
 
-      if (coffeeInfo) {
-        resultadoDiv.innerHTML = "<p><b>Origen:</b> " + coffeeInfo.origen + "</p><p><b>Sabor:</b> " + coffeeInfo.sabor + "</p>";
-      } else {
-        resultadoDiv.innerHTML = "<p>Cafe no encontrado.</p>";
-      }
-    })
-    .catch(function(error) {
-      console.error("Error al buscar:", error);
-      resultadoDiv.innerHTML = "<p>Error al buscar el cafe.</p>";
-    });
+  try {
+    const data = await getSheetData();
+    const coffeeInfo = findCoffeeInfo(coffeeName, data);
+
+    if (coffeeInfo) {
+      resultsDiv.innerHTML = `<p><b>Origin:</b> ${coffeeInfo.origin}</p><p><b>Flavor:</b> ${coffeeInfo.flavor}</p>`;
+    } else {
+      resultsDiv.innerHTML = "<p>Coffee not found.</p>";
+    }
+  } catch (error) {
+    console.error("Error searching for coffee:", error);
+    resultsDiv.innerHTML = "<p>Error searching for coffee. Please try again later.</p>";
+  } finally {
+    loaderDiv.style.display = "none"; // Hide loader regardless of outcome
+  }
 }
 
-function getSheetData() {
-  return new Promise(function(resolve, reject) {
-    var url = "https://opensheet.elk.sh/" + SHEET_ID + "/" + SHEET_NAME;
-    fetch(url)
-      .then(function(response) {
-        if (!response.ok) {
-          reject("Error al obtener datos: " + response.status);
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        resolve(data);
-      })
-      .catch(function(error) {
-        reject(error);
-      });
-  });
+async function getSheetData() {
+  const url = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Error fetching sheet data: ${response.status} ${response.statusText}`);
+  }
+  return await response.json();
 }
 
-function findCoffeeInfo(cafeName, data) {
-  for (var i = 0; i < data.length; i++) {
-    var row = data[i];
-    if (row.cafe && row.cafe.toLowerCase() === cafeName) {
+function findCoffeeInfo(coffeeName, data) {
+  // Ensure data is an array before trying to iterate
+  if (!Array.isArray(data)) {
+    console.error("Data received from sheet is not an array:", data);
+    return null;
+  }
+  for (const row of data) {
+    // Assuming column names in the sheet are 'cafe', 'origen', and 'sabor'.
+    // It's good practice to ensure these properties exist and are strings before calling toLowerCase.
+    if (row.cafe && typeof row.cafe === 'string' && row.cafe.toLowerCase() === coffeeName) {
       return {
-        origen: row.origen || "Informacion no disponible",
-        sabor: row.sabor || "Informacion no disponible"
+        origin: row.origen || "Information not available",
+        flavor: row.sabor || "Information not available"
       };
     }
   }

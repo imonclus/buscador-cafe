@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Buscador de Cafe</title>
-<link rel="stylesheet" href="style.css">
+<title>Coffee Finder</title>
+<link rel="stylesheet" href="style.css"> <!-- Keeping "estilo.css" as is, will rename file separately -->
 </head>
 <body><center>
 <br>
 <br>
-  <div class="google-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/250px-Roasted_coffee_beans.jpg" alt="Grano de Cafe" class="google-logo"><br><br>
-    <form class="google-search-form" onsubmit="buscarCafe(); return false;">
-      <input type="text" id="cafeName" class="google-search-bar" placeholder="Buscar Cafe">
+  <div class="search-container"> <!-- Changed class name -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/250px-Roasted_coffee_beans.jpg" alt="Coffee Bean" class="search-logo"><br><br> <!-- Changed class name -->
+    <form class="search-form" onsubmit="searchCoffee(); return false;"> <!-- Changed class name -->
+      <input type="text" id="coffeeName" class="search-bar" placeholder="Search Coffee"> <!-- Changed class name -->
     </form>
-    <div id="resultado" class="google-results-container"></div>
+    <div id="loader" class="loader" style="display: none;"></div> <!-- Loader element -->
+    <div id="results" class="results-container"></div> <!-- Changed class name -->
   </div>
 <br><br>
   <footer>
-    Desarrollado por Ignacio
+    Developed by Ignacio
   </footer>
 
   <script src="script.js"></script>
