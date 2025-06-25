@@ -8,8 +8,12 @@ body {
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
-  background-color: #f4f4f4;
   box-sizing: border-box;
+
+  /* --- FONDO DEGRADADO --- */
+  background: #2a1a12; /* Color de fondo si el degradado no carga */
+  background-image: linear-gradient(to bottom, #5C8A4B, #2a1a12);
+  background-attachment: fixed; /* Fija el degradado para que no se mueva con el scroll */
 }
 
 .page-container {
@@ -53,7 +57,7 @@ h1 {
 
 .search-form {
   width: 100%;
-  margin-bottom: 30px; /* Espacio para separar del nuevo bloque */
+  margin-bottom: 30px;
 }
 
 .search-bar {
@@ -72,26 +76,55 @@ h1 {
   border-color: rgba(223, 225, 229, 0);
 }
 
-/* --- ESTILOS PARA LA NUEVA LISTA DE CAFÉS --- */
+/* --- ESTILOS PARA LA LISTA DE CAFÉS DESPLEGABLE --- */
 .available-coffees-container {
   width: 100%;
   border-top: 1px solid #eee;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
-.available-coffees-container h2 {
+#coffee-list-toggle {
   text-align: center;
   color: #555;
   font-size: 18px;
   margin-bottom: 15px;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+#coffee-list-toggle:hover {
+  background-color: #f5f5f5;
+}
+
+#coffee-list-toggle::after {
+  content: '▼';
+  font-size: 12px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+#coffee-list-toggle.active::after {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 #coffee-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 300px; /* Altura máxima antes de activar el scroll */
-  overflow-y: auto; /* Scroll vertical si la lista es muy larga */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
+#coffee-list.open {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 #coffee-list li {
@@ -107,17 +140,8 @@ h1 {
   background-color: #c47a33;
   color: #fff;
 }
+/* --- FIN DE ESTILOS DE LISTA DESPLEGABLE --- */
 
-#coffee-list .list-loader, #coffee-list .list-error {
-  text-align: center;
-  color: #999;
-  font-style: italic;
-  cursor: default;
-}
-
-#coffee-list .list-error {
-  color: #d9534f;
-}
 
 .results-container {
   text-align: left;
@@ -184,11 +208,47 @@ footer {
   margin-top: 40px;
   padding: 20px;
   text-align: center;
-  color: #999;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
   .page-container {
     flex-direction: column;
   }
+}
+
+/* --- ESTILOS PARA EL CONTROL DE MÚSICA --- */
+#music-control {
+  margin-top: 15px;
+}
+
+#play-pause-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#play-pause-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* --- ESTILOS PARA LA ATRIBUCIÓN DE MÚSICA --- */
+.music-attribution {
+  margin-top: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+.music-attribution p {
+  margin: 0;
+}
+
+.music-attribution a {
+  color: #fff;
+  text-decoration: underline;
 }

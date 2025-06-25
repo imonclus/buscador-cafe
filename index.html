@@ -16,7 +16,7 @@
       </form>
       
       <div class="available-coffees-container">
-        <h2>Nuestros Cafés</h2>
+        <h2 id="coffee-list-toggle">Nuestros Cafés</h2> 
         <ul id="coffee-list">
           <li class="list-loader">Cargando lista...</li>
         </ul>
@@ -31,11 +31,22 @@
 
   </div>
   
-  <footer>
-    Desarrollado por Ignacio
+<footer>
+  <p>Desarrollado por Ignacio</p>
+  
+  <div id="music-control">
+    <button id="play-pause-btn">Reproducir Música</button>
+  </div>
+
+  <div class="music-attribution">
+    <p>Music track: Arrival by Aylex. Source: <a href="https://freetouse.com/music" target="_blank" rel="noopener noreferrer">freetouse.com/music</a> No Copyright Music for Video (Free)</p>
+  </div>
   </footer>
 
-  <script src="script.js"></script>
+  <audio id="audio-click" src="click.ogg"></audio>
+  <audio id="audio-fondo" src="musica-fondo.mp3" autoplay loop></audio>
 
+  <script src="script.js"></script>
+  
 </body>
 </html>

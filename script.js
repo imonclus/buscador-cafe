@@ -5,6 +5,34 @@ const SHEET_NAME = "Hoja1";
 // --- SE EJECUTA CUANDO LA PÁGINA HA CARGADO ---
 document.addEventListener('DOMContentLoaded', function() {
   displayCoffeeList();
+  // --- LÓGICA PARA EL BOTÓN DE MÚSICA ---
+  const audioFondo = document.getElementById('audio-fondo');
+  const playPauseBtn = document.getElementById('play-pause-btn');
+
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', function() {
+      if (audioFondo.paused) {
+        audioFondo.play();
+        playPauseBtn.textContent = 'Pausar Música';
+      } else {
+        audioFondo.pause();
+        playPauseBtn.textContent = 'Reproducir Música';
+      }
+    });
+  }
+    // --- LÓGICA PARA LA LISTA DESPLEGABLE ---
+  const coffeeListToggle = document.getElementById('coffee-list-toggle');
+  const coffeeList = document.getElementById('coffee-list');
+
+  if (coffeeListToggle) {
+    coffeeListToggle.addEventListener('click', function() {
+      // Añade o quita la clase 'open' de la lista <ul>
+      coffeeList.classList.toggle('open');
+      // Añade o quita la clase 'active' del título <h2> para rotar la flecha
+      this.classList.toggle('active');
+    });
+  }
+  // --- FIN DE LA LÓGICA DESPLEGABLE ---
 });
 
 /**
@@ -22,16 +50,18 @@ function capitalizeFirstLetter(string) {
  */
 function displayCoffeeList() {
   const listElement = document.getElementById('coffee-list');
-  
+  const audioClick = document.getElementById('audio-click'); // <-- 1. OBTÉN EL SONIDO
+
   getSheetData()
     .then(function(data) {
-      listElement.innerHTML = ''; // Limpia el mensaje de "Cargando..."
+      listElement.innerHTML = ''; 
 
       data.forEach(function(row) {
-        if (row.cafe) { // Asegúrate de que la fila tiene un nombre de café
+        if (row.cafe) {
           const listItem = document.createElement('li');
           listItem.textContent = row.cafe;
           listItem.addEventListener('click', function() {
+            audioClick.play(); // <-- 2. REPRODUCE EL SONIDO
             document.getElementById('cafeName').value = row.cafe;
             buscarCafe();
           });
@@ -44,7 +74,6 @@ function displayCoffeeList() {
       listElement.innerHTML = '<li class="list-error">No se pudo cargar la lista.</li>';
     });
 }
-
 function buscarCafe() {
   const cafe = document.getElementById("cafeName").value.trim().toLowerCase();
   const resultadoDiv = document.getElementById("resultado");
