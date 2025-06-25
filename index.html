@@ -2,24 +2,40 @@
 <html>
 <head>
 <title>Buscador de Cafe</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="estilo.css">
 </head>
-<body><center>
-<br>
-<br>
-  <div class="google-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/250px-Roasted_coffee_beans.jpg" alt="Grano de Cafe" class="google-logo"><br><br>
-    <form class="google-search-form" onsubmit="buscarCafe(); return false;">
-      <input type="text" id="cafeName" class="google-search-bar" placeholder="Buscar Cafe">
-    </form>
-    <div id="resultado" class="google-results-container"></div>
+<body>
+
+  <div class="page-container">
+    
+    <div class="search-column">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Roasted_coffee_beans.jpg/250px-Roasted_coffee_beans.jpg" alt="Grano de Cafe" class="logo-img">
+      <h1>Buscador de Café</h1>
+      <form class="search-form" onsubmit="buscarCafe(); return false;">
+        <input type="text" id="cafeName" class="search-bar" placeholder="Busca tu café...">
+      </form>
+      
+      <div class="available-coffees-container">
+        <h2>Nuestros Cafés</h2>
+        <ul id="coffee-list">
+          <li class="list-loader">Cargando lista...</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="results-column">
+      <div id="resultado" class="results-container">
+          </div>
+    </div>
+
   </div>
-<br><br>
+  
   <footer>
     Desarrollado por Ignacio
   </footer>
 
   <script src="script.js"></script>
 
-</center></body>
+</body>
 </html>
